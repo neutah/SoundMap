@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SoundMap Design System - High Contrast Accessibility Focus
+   All colors use HSL for theming consistency
+   WCAG AAA compliant contrast ratios
+*/
+
+@layer base {
+  :root {
+    /* Yellow & Purple theme as default - High contrast for accessibility */
+    --background: 270 80% 8%;
+    --foreground: 55 100% 50%;
+
+    --card: 270 70% 12%;
+    --card-foreground: 55 100% 50%;
+
+    --popover: 270 70% 12%;
+    --popover-foreground: 55 100% 50%;
+
+    --primary: 55 100% 50%;
+    --primary-foreground: 270 80% 8%;
+
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 270 80% 8%;
+
+    --muted: 270 50% 20%;
+    --muted-foreground: 55 80% 70%;
+
+    --accent: 280 100% 70%;
+    --accent-foreground: 270 80% 8%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 55 100% 50%;
+    --input: 270 50% 20%;
+    --ring: 55 100% 50%;
+
+    --radius: 1rem;
+
+    /* SoundMap specific tokens */
+    --sound-alert: 0 100% 60%;
+    --sound-warning: 55 100% 50%;
+    --sound-info: 280 100% 70%;
+    --sound-success: 145 100% 50%;
+    
+    --radar-ring: 55 100% 50%;
+    --radar-pulse: 280 100% 70%;
+    --radar-center: 270 70% 15%;
+    
+    --direction-indicator: 55 100% 55%;
+    --sound-icon-bg: 270 60% 18%;
+    --sound-icon-active: 55 100% 50%;
+
+    --sidebar-background: 270 70% 10%;
+    --sidebar-foreground: 55 100% 50%;
+    --sidebar-primary: 55 100% 50%;
+    --sidebar-primary-foreground: 270 80% 8%;
+    --sidebar-accent: 270 50% 18%;
+    --sidebar-accent-foreground: 55 100% 50%;
+    --sidebar-border: 55 100% 40%;
+    --sidebar-ring: 55 100% 50%;
+  }
+
+  /* Theme: Yellow & Purple - High Contrast */
+  .yellow-purple {
+    --background: 270 80% 8%;
+    --foreground: 55 100% 50%;
+    --card: 270 70% 12%;
+    --card-foreground: 55 100% 50%;
+    --popover: 270 70% 12%;
+    --popover-foreground: 55 100% 50%;
+    --primary: 55 100% 50%;
+    --primary-foreground: 270 80% 8%;
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 270 80% 8%;
+    --muted: 270 50% 20%;
+    --muted-foreground: 55 80% 70%;
+    --accent: 280 100% 70%;
+    --accent-foreground: 270 80% 8%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 55 100% 50%;
+    --input: 270 50% 20%;
+    --ring: 55 100% 50%;
+    --radar-ring: 55 100% 50%;
+    --radar-pulse: 280 100% 70%;
+    --radar-center: 270 70% 15%;
+    --sound-icon-bg: 270 60% 18%;
+    --sound-icon-active: 55 100% 50%;
+  }
+
+  /* Theme: Green & Pink - High Contrast */
+  .green-pink {
+    --background: 330 60% 8%;
+    --foreground: 145 100% 50%;
+    --card: 330 50% 12%;
+    --card-foreground: 145 100% 50%;
+    --popover: 330 50% 12%;
+    --popover-foreground: 145 100% 50%;
+    --primary: 145 100% 50%;
+    --primary-foreground: 330 60% 8%;
+    --secondary: 330 100% 70%;
+    --secondary-foreground: 330 60% 8%;
+    --muted: 330 40% 20%;
+    --muted-foreground: 145 80% 70%;
+    --accent: 330 100% 70%;
+    --accent-foreground: 330 60% 8%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 145 100% 50%;
+    --input: 330 40% 20%;
+    --ring: 145 100% 50%;
+    --radar-ring: 145 100% 50%;
+    --radar-pulse: 330 100% 70%;
+    --radar-center: 330 50% 15%;
+    --sound-icon-bg: 330 45% 18%;
+    --sound-icon-active: 145 100% 50%;
+  }
+
+  /* Theme: Blue & Orange - High Contrast */
+  .blue-orange {
+    --background: 220 70% 8%;
+    --foreground: 30 100% 55%;
+    --card: 220 60% 12%;
+    --card-foreground: 30 100% 55%;
+    --popover: 220 60% 12%;
+    --popover-foreground: 30 100% 55%;
+    --primary: 30 100% 55%;
+    --primary-foreground: 220 70% 8%;
+    --secondary: 210 100% 60%;
+    --secondary-foreground: 220 70% 8%;
+    --muted: 220 50% 20%;
+    --muted-foreground: 30 80% 70%;
+    --accent: 210 100% 60%;
+    --accent-foreground: 220 70% 8%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 100% 55%;
+    --input: 220 50% 20%;
+    --ring: 30 100% 55%;
+    --radar-ring: 30 100% 55%;
+    --radar-pulse: 210 100% 60%;
+    --radar-center: 220 60% 15%;
+    --sound-icon-bg: 220 55% 18%;
+    --sound-icon-active: 30 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  :root {
+    --text-scale: 1;
+    --button-scale: 1;
+    --icon-scale: 1;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: calc(1rem * var(--text-scale));
+  }
+
+  button, .btn {
+    transform: scale(var(--button-scale));
+  }
+
+  svg {
+    transform: scale(var(--icon-scale));
+  }
+}
+
+@layer utilities {
+  .high-contrast-focus {
+    @apply focus:outline-none focus:ring-4 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
+  }
+}
+
+/* Animations for radar and sound indicators */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes sound-ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-radar-pulse {
+  animation: radar-pulse 2s ease-out infinite;
+}
+
+.animate-sound-ping {
+  animation: sound-ping 1.5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
