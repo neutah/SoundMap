@@ -2,150 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-/* SoundMap Design System - High Contrast Accessibility Focus
-   All colors use HSL for theming consistency
-   WCAG AAA compliant contrast ratios
+/* 
+  soundsense design system
+  high contrast theme
+  all colors in hsl format for wcag aaa compliance
 */
 
 @layer base {
   :root {
-    /* Yellow & Purple theme as default - High contrast for accessibility */
-    --background: 270 80% 8%;
-    --foreground: 55 100% 50%;
+    /* base high contrast light theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
-    --card: 270 70% 12%;
-    --card-foreground: 55 100% 50%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 270 70% 12%;
-    --popover-foreground: 55 100% 50%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 55 100% 50%;
-    --primary-foreground: 270 80% 8%;
+    /* primary teal accent for main actions */
+    --primary: 174 100% 29%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 270 80% 8%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 270 50% 20%;
-    --muted-foreground: 55 80% 70%;
+    --muted: 0 0% 85%;
+    --muted-foreground: 0 0% 25%;
 
-    --accent: 280 100% 70%;
-    --accent-foreground: 270 80% 8%;
+    --accent: 174 100% 35%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 100% 60%;
+    /* alarming sounds are bright red/orange */
+    --alarming: 0 90% 50%;
+    --alarming-foreground: 0 0% 100%;
+
+    /* safe sounds are bright green */
+    --safe: 142 76% 36%;
+    --safe-foreground: 0 0% 100%;
+
+    /* background noise are bright cyan */
+    --noise: 195 100% 45%;
+    --noise-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 55 100% 50%;
-    --input: 270 50% 20%;
-    --ring: 55 100% 50%;
+    --border: 0 0% 70%;
+    --input: 0 0% 70%;
+    --ring: 174 100% 29%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* SoundMap specific tokens */
-    --sound-alert: 0 100% 60%;
-    --sound-warning: 55 100% 50%;
-    --sound-info: 280 100% 70%;
-    --sound-success: 145 100% 50%;
-    
-    --radar-ring: 55 100% 50%;
-    --radar-pulse: 280 100% 70%;
-    --radar-center: 270 70% 15%;
-    
-    --direction-indicator: 55 100% 55%;
-    --sound-icon-bg: 270 60% 18%;
-    --sound-icon-active: 55 100% 50%;
+    /* scalable ui variables */
+    --text-scale: 1;
+    --button-scale: 1;
+    --icon-scale: 1;
 
-    --sidebar-background: 270 70% 10%;
-    --sidebar-foreground: 55 100% 50%;
-    --sidebar-primary: 55 100% 50%;
-    --sidebar-primary-foreground: 270 80% 8%;
-    --sidebar-accent: 270 50% 18%;
-    --sidebar-accent-foreground: 55 100% 50%;
-    --sidebar-border: 55 100% 40%;
-    --sidebar-ring: 55 100% 50%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 174 100% 29%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 90%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 70%;
+    --sidebar-ring: 174 100% 29%;
   }
 
-  /* Theme: Yellow & Purple - High Contrast */
-  .yellow-purple {
-    --background: 270 80% 8%;
-    --foreground: 55 100% 50%;
-    --card: 270 70% 12%;
-    --card-foreground: 55 100% 50%;
-    --popover: 270 70% 12%;
-    --popover-foreground: 55 100% 50%;
-    --primary: 55 100% 50%;
-    --primary-foreground: 270 80% 8%;
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 270 80% 8%;
-    --muted: 270 50% 20%;
-    --muted-foreground: 55 80% 70%;
-    --accent: 280 100% 70%;
-    --accent-foreground: 270 80% 8%;
-    --destructive: 0 100% 60%;
+  /* default to dark high contrast theme */
+  .dark {
+    /* near black background for maximum contrast */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    /* bright teal for visibility */
+    --primary: 174 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 174 100% 45%;
+    --accent-foreground: 0 0% 0%;
+
+    /* alarming sounds is bright red */
+    --alarming: 0 100% 60%;
+    --alarming-foreground: 0 0% 100%;
+
+    /* safe sounds - bright green */
+    --safe: 142 90% 50%;
+    --safe-foreground: 0 0% 0%;
+
+    /* background noise - bright cyan */
+    --noise: 195 100% 60%;
+    --noise-foreground: 0 0% 0%;
+
+    --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 55 100% 50%;
-    --input: 270 50% 20%;
-    --ring: 55 100% 50%;
-    --radar-ring: 55 100% 50%;
-    --radar-pulse: 280 100% 70%;
-    --radar-center: 270 70% 15%;
-    --sound-icon-bg: 270 60% 18%;
-    --sound-icon-active: 55 100% 50%;
+
+    --border: 0 0% 30%;
+    --input: 0 0% 25%;
+    --ring: 174 100% 50%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 174 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 174 100% 50%;
   }
 
-  /* Theme: Green & Pink - High Contrast */
-  .green-pink {
-    --background: 330 60% 8%;
-    --foreground: 145 100% 50%;
-    --card: 330 50% 12%;
-    --card-foreground: 145 100% 50%;
-    --popover: 330 50% 12%;
-    --popover-foreground: 145 100% 50%;
-    --primary: 145 100% 50%;
-    --primary-foreground: 330 60% 8%;
-    --secondary: 330 100% 70%;
-    --secondary-foreground: 330 60% 8%;
-    --muted: 330 40% 20%;
-    --muted-foreground: 145 80% 70%;
-    --accent: 330 100% 70%;
-    --accent-foreground: 330 60% 8%;
-    --destructive: 0 100% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 145 100% 50%;
-    --input: 330 40% 20%;
-    --ring: 145 100% 50%;
-    --radar-ring: 145 100% 50%;
-    --radar-pulse: 330 100% 70%;
-    --radar-center: 330 50% 15%;
-    --sound-icon-bg: 330 45% 18%;
-    --sound-icon-active: 145 100% 50%;
-  }
-
-  /* Theme: Blue & Orange - High Contrast */
-  .blue-orange {
-    --background: 220 70% 8%;
-    --foreground: 30 100% 55%;
-    --card: 220 60% 12%;
-    --card-foreground: 30 100% 55%;
-    --popover: 220 60% 12%;
-    --popover-foreground: 30 100% 55%;
-    --primary: 30 100% 55%;
-    --primary-foreground: 220 70% 8%;
-    --secondary: 210 100% 60%;
-    --secondary-foreground: 220 70% 8%;
-    --muted: 220 50% 20%;
-    --muted-foreground: 30 80% 70%;
-    --accent: 210 100% 60%;
-    --accent-foreground: 220 70% 8%;
-    --destructive: 0 100% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 30 100% 55%;
-    --input: 220 50% 20%;
-    --ring: 30 100% 55%;
-    --radar-ring: 30 100% 55%;
-    --radar-pulse: 210 100% 60%;
-    --radar-center: 220 60% 15%;
-    --sound-icon-bg: 220 55% 18%;
-    --sound-icon-active: 30 100% 55%;
+  /* high contrast light variant */
+  .light-contrast {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 95%;
+    --card-foreground: 0 0% 0%;
+    --primary: 174 100% 25%;
+    --primary-foreground: 0 0% 100%;
+    --border: 0 0% 0%;
   }
 }
 
@@ -154,79 +140,89 @@
     @apply border-border;
   }
 
-  :root {
-    --text-scale: 1;
-    --button-scale: 1;
-    --icon-scale: 1;
-  }
-
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply bg-background text-foreground;
+    /* apply text scaling */
     font-size: calc(1rem * var(--text-scale));
   }
 
-  button, .btn {
-    transform: scale(var(--button-scale));
-  }
-
-  svg {
-    transform: scale(var(--icon-scale));
+  /* ensure high contrast focus states */
+  *:focus-visible {
+    @apply outline-none ring-4 ring-ring ring-offset-2 ring-offset-background;
   }
 }
 
 @layer utilities {
-  .high-contrast-focus {
-    @apply focus:outline-none focus:ring-4 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
+  /* scalable button sizes */
+  .btn-scaled {
+    transform: scale(var(--button-scale));
+    transform-origin: center;
   }
-}
 
-/* Animations for radar and sound indicators */
-@keyframes radar-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
+  /* scalable icon sizes */
+  .icon-scaled {
+    transform: scale(var(--icon-scale));
+    transform-origin: center;
   }
-  100% {
-    transform: scale(2.5);
-    opacity: 0;
-  }
-}
 
-@keyframes sound-ping {
-  0% {
-    transform: scale(1);
-    opacity: 1;
+  /* sound category colors */
+  .bg-alarming {
+    background-color: hsl(var(--alarming));
   }
-  50% {
-    transform: scale(1.3);
-    opacity: 0.7;
+  .text-alarming {
+    color: hsl(var(--alarming));
   }
-  100% {
-    transform: scale(1);
-    opacity: 1;
+  .border-alarming {
+    border-color: hsl(var(--alarming));
   }
-}
 
-@keyframes fade-in-up {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
+  .bg-safe {
+    background-color: hsl(var(--safe));
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  .text-safe {
+    color: hsl(var(--safe));
   }
-}
+  .border-safe {
+    border-color: hsl(var(--safe));
+  }
 
-.animate-radar-pulse {
-  animation: radar-pulse 2s ease-out infinite;
-}
+  .bg-noise {
+    background-color: hsl(var(--noise));
+  }
+  .text-noise {
+    color: hsl(var(--noise));
+  }
+  .border-noise {
+    border-color: hsl(var(--noise));
+  }
 
-.animate-sound-ping {
-  animation: sound-ping 1.5s ease-in-out infinite;
-}
+  /* pulse animation for active listening */
+  .pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.4s ease-out forwards;
+  @keyframes pulse-ring {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+  }
+
+  /* notification flash animation */
+  .flash-alert {
+    animation: flash-alert 0.5s ease-in-out 3;
+  }
+
+  @keyframes flash-alert {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
 }
