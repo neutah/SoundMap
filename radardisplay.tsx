@@ -1,166 +1,240 @@
-// radar display component
-// renders a circular radar interface showing sound positions and directions
+// main sound monitoring component with microphone input and classification
+// this is the core component that:
+// - displays the microphone control button
+// - shows real-time predictions from the ml model
+// - triggers haptic feedback and notifications on detection
+// - displays visual alerts for different sound categories
 
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTeachableMachine } from '@/hooks/useTeachableMachine';
+import { useHaptic } from '@/hooks/useHaptic';
+import { useNotifications } from '@/hooks/useNotifications';
+import { useAuth } from '@/contexts/AuthContext';
+import { DetectedSound } from '@/types/sound';
+import { SoundCategoryIcon, SoundCategoryBadge } from '@/components/icons/SoundCategoryIcon';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Mic, MicOff, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SoundEvent } from './types';
-import { SoundIcon } from './SoundIcon';
 
-interface RadarDisplayProps {
-  sounds: SoundEvent[];   // array of sound events to display
-  size?: number;          // diameter of the radar in pixels
-  className?: string;
+// component props interface
+interface SoundMonitorProps {
+  // whether haptic feedback is enabled (from user settings)
+  hapticEnabled?: boolean;
 }
 
-export const RadarDisplay = ({ 
-  sounds, 
-  size = 320,
-  className 
-}: RadarDisplayProps) => {
-  const center = size / 2;
-  const maxRadius = (size / 2) - 40; // leave room for icons at edge
+// sound monitor component
+export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
+  // hooks 
+  
+  // get current user for saving notifications
+  const { user } = useAuth();
+  
+  // haptic feedback functions
+  const { vibrate } = useHaptic();
+  
+  // notification saving functions
+  const { addNotification } = useNotifications(user?.id ?? null);
+  
+  // local state for visual alert animation
+  const [showAlert, setShowAlert] = useState(false);
 
-  // calculates x,y position for a sound based on direction and distance
-  // direction: 0-360 degrees (0 = north, 90 = east)
-  // distance: 0-100 (0 = center, 100 = edge)
-  const getSoundPosition = (direction: number, distance: number) => {
-    // convert direction to radians, offset by -90 so 0 degrees points up (north)
-    const radians = ((direction - 90) * Math.PI) / 180;
-    const radius = (distance / 100) * maxRadius;
+  // sound detection callback 
+  
+  // called when the ml model detects a sound with high confidence
+  // handles haptic feedback, visual alerts, and saving to database
+  const handleSoundDetected = useCallback(async (sound: DetectedSound) => {
+    console.log('sound detected in monitor:', sound);
     
-    return {
-      x: center + radius * Math.cos(radians),
-      y: center + radius * Math.sin(radians),
-    };
-  };
+    // trigger haptic feedback based on sound category
+    // different categories have different vibration patterns
+    if (hapticEnabled) {
+      vibrate(sound.category);
+    }
 
-  // converts numeric direction to compass label
-  const getDirectionLabel = (direction: number): string => {
-    if (direction >= 337.5 || direction < 22.5) return 'North';
-    if (direction >= 22.5 && direction < 67.5) return 'Northeast';
-    if (direction >= 67.5 && direction < 112.5) return 'East';
-    if (direction >= 112.5 && direction < 157.5) return 'Southeast';
-    if (direction >= 157.5 && direction < 202.5) return 'South';
-    if (direction >= 202.5 && direction < 247.5) return 'Southwest';
-    if (direction >= 247.5 && direction < 292.5) return 'West';
-    return 'Northwest';
-  };
+    // show visual alert animation for 3 seconds
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
 
+    // save notification to database for history tracking
+    if (user) {
+      await addNotification(sound);
+    }
+  }, [hapticEnabled, vibrate, addNotification, user]);
+
+  // teachable machine hook 
+  
+  // initialize the ml model and get control functions
+  const {
+    isLoading,       // true while loading tensorflow and model
+    isListening,     // true when microphone is active
+    error,           // error message if something failed
+    predictions,     // current frame's predictions
+    detectedSound,   // most recent high-confidence detection
+    startListening,  // function to start microphone
+    stopListening,   // function to stop microphone
+    labels,          // list of sounds the model can detect
+  } = useTeachableMachine(handleSoundDetected, 0.7);
+
+  // notification permission effect 
+  
+  // request browser notification permission on component mount
+  // this allows showing system notifications when sounds are detected
+  useEffect(() => {
+    if (Notification.permission === 'default') {
+      console.log('requesting notification permission...');
+      Notification.requestPermission().then(permission => {
+        console.log('notification permission:', permission);
+      });
+    }
+  }, []);
+
+  // derived state 
+  
+  // get top 3 predictions for display in the ui
+  // sorted by probability (highest first)
+  const topPredictions = predictions.slice(0, 3);
+
+  // render 
+  
   return (
-    <div 
-      className={cn('relative', className)}
-      style={{ width: size, height: size }}
-      role="application"
-      aria-label="Sound direction radar. Shows sounds coming from different directions around you."
-    >
-      {/* svg radar background with rings and crosshairs */}
-      <svg 
-        viewBox={`0 0 ${size} ${size}`} 
-        className="absolute inset-0"
-        aria-hidden="true"
-      >
-        {/* outer background circle */}
-        <circle 
-          cx={center} 
-          cy={center} 
-          r={maxRadius + 20} 
-          className="fill-card stroke-border"
-          strokeWidth="2"
-        />
+    <div className="space-y-6">
+      {/* main control card with microphone button */}
+      <Card className={cn(
+        'border-2 transition-all duration-300',
+        // pulsing border when actively listening
+        isListening && 'border-primary pulse-ring',
+        // flash animation when sound is detected
+        showAlert && 'flash-alert',
+        // category-specific border color during alert
+        showAlert && detectedSound?.category === 'alarming' && 'border-alarming',
+        showAlert && detectedSound?.category === 'safe' && 'border-safe',
+        showAlert && detectedSound?.category === 'background' && 'border-noise',
+      )}>
+        <CardHeader className="text-center pb-2">
+          <CardTitle className="text-scaled-2xl font-bold">
+            sound monitor
+          </CardTitle>
+        </CardHeader>
         
-        {/* concentric distance rings at 33%, 66%, and 100% */}
-        {[0.33, 0.66, 1].map((scale, i) => (
-          <circle
-            key={i}
-            cx={center}
-            cy={center}
-            r={maxRadius * scale}
-            className="fill-none stroke-border"
-            strokeWidth="1.5"
-            strokeDasharray="8 4"
-          />
-        ))}
-        
-        {/* vertical crosshair line */}
-        <line 
-          x1={center} 
-          y1={center - maxRadius - 10} 
-          x2={center} 
-          y2={center + maxRadius + 10}
-          className="stroke-border"
-          strokeWidth="1"
-        />
-        {/* horizontal crosshair line */}
-        <line 
-          x1={center - maxRadius - 10} 
-          y1={center} 
-          x2={center + maxRadius + 10} 
-          y2={center}
-          className="stroke-border"
-          strokeWidth="1"
-        />
-        
-        {/* center dot representing user position */}
-        <circle 
-          cx={center} 
-          cy={center} 
-          r={8} 
-          className="fill-secondary stroke-secondary-foreground"
-          strokeWidth="2"
-        />
-      </svg>
-
-      {/* compass direction labels */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <span className="absolute top-2 left-1/2 -translate-x-1/2 text-sm font-bold text-foreground">N</span>
-        <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm font-bold text-foreground">S</span>
-        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-sm font-bold text-foreground">W</span>
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-sm font-bold text-foreground">E</span>
-      </div>
-
-      {/* animated pulse effect behind active sounds */}
-      {sounds.filter(s => s.isActive).map((sound) => {
-        const pos = getSoundPosition(sound.direction, sound.distance);
-        return (
-          <div
-            key={`pulse-${sound.id}`}
-            className="absolute w-12 h-12 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            style={{ left: pos.x, top: pos.y }}
-            aria-hidden="true"
-          >
-            <div className="absolute inset-0 rounded-full bg-primary/30 animate-radar-pulse" />
+        <CardContent className="space-y-6">
+          {/* large circular microphone control button */}
+          <div className="flex justify-center">
+            <Button
+              onClick={isListening ? stopListening : startListening}
+              disabled={isLoading}
+              size="lg"
+              className={cn(
+                'w-32 h-32 rounded-full btn-scaled transition-all duration-300',
+                // red when listening (to stop), primary when not (to start)
+                isListening 
+                  ? 'bg-destructive hover:bg-destructive/90' 
+                  : 'bg-primary hover:bg-primary/90'
+              )}
+              aria-label={isListening ? 'stop listening' : 'start listening'}
+            >
+              {/* show loading spinner, stop icon, or start icon */}
+              {isLoading ? (
+                <Loader2 className="w-12 h-12 animate-spin" />
+              ) : isListening ? (
+                <MicOff className="w-12 h-12" strokeWidth={2.5} />
+              ) : (
+                <Mic className="w-12 h-12" strokeWidth={2.5} />
+              )}
+            </Button>
           </div>
-        );
-      })}
 
-      {/* sound icons positioned on the radar */}
-      {sounds.map((sound) => {
-        const pos = getSoundPosition(sound.direction, sound.distance);
-        const directionLabel = getDirectionLabel(sound.direction);
-        
-        return (
-          <div
-            key={sound.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2 animate-fade-in-up"
-            style={{ left: pos.x, top: pos.y }}
-          >
-            <SoundIcon
-              type={sound.type}
-              isActive={sound.isActive}
-              intensity={sound.intensity}
-              aria-label={`${sound.label} detected ${directionLabel}, ${sound.isActive ? 'currently active' : 'inactive'}`}
-            />
-          </div>
-        );
-      })}
+          {/* status text below button */}
+          <p className="text-center text-scaled-xl font-bold">
+            {isLoading 
+              ? 'loading model...' 
+              : isListening 
+                ? 'listening for sounds...' 
+                : 'tap to start listening'}
+          </p>
 
-      {/* screen reader only announcements for active sounds */}
-      <div className="sr-only" role="status" aria-live="polite">
-        {sounds.filter(s => s.isActive).map(sound => (
-          <span key={`sr-${sound.id}`}>
-            {sound.label} detected to the {getDirectionLabel(sound.direction)}.
-          </span>
-        ))}
-      </div>
+          {/* error message display */}
+          {error && (
+            <div 
+              className="p-4 rounded-lg bg-destructive/20 border-2 border-destructive text-destructive text-scaled-base font-bold text-center"
+              role="alert"
+            >
+              error: {error}
+            </div>
+          )}
+
+          {/* current detected sound badge */}
+          {detectedSound && (
+            <div className="flex justify-center">
+              <SoundCategoryBadge
+                category={detectedSound.category}
+                label={detectedSound.label}
+                confidence={detectedSound.confidence}
+                className="text-scaled-lg"
+              />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* live predictions card - shows when listening */}
+      {isListening && topPredictions.length > 0 && (
+        <Card className="border-2">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-scaled-lg font-bold">
+              live predictions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* show top 3 predictions with progress bars */}
+            {topPredictions.map((pred, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  {/* prediction class name */}
+                  <span className="text-scaled-base font-bold truncate flex-1 mr-4">
+                    {pred.className}
+                  </span>
+                  {/* probability percentage */}
+                  <span className="text-scaled-sm text-muted-foreground">
+                    {Math.round(pred.probability * 100)}%
+                  </span>
+                </div>
+                {/* visual progress bar for probability */}
+                <Progress 
+                  value={pred.probability * 100} 
+                  className="h-3"
+                  aria-label={`${pred.className} probability ${Math.round(pred.probability * 100)}%`}
+                />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* available sounds card - shows when not listening */}
+      {labels.length > 0 && !isListening && (
+        <Card className="border-2">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-scaled-lg font-bold">
+              detectable sounds
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* display all sound labels the model can detect */}
+            <div className="flex flex-wrap gap-2">
+              {labels.map((label, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-scaled-sm font-bold"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
-};
+}
