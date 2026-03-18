@@ -1,4 +1,5 @@
 // main app component with routing and auth
+import React from "react";
 import { Toaster } from "./toaster";
 import { Toaster as Sonner } from "./sonner";
 import { TooltipProvider } from "./tooltip";
