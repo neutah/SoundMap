@@ -4,8 +4,8 @@
 // persists to database so settings follow user across devices
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { UserSettings } from '@/types/sound';
+import { supabase } from './client'; 
+import { UserSettings } from './types';
 
 // default settings for new users
 // these values are used when a user first signs up
