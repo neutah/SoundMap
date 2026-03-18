@@ -1,16 +1,16 @@
 // main app component with routing and auth
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "./toaster";
+import { Toaster as Sonner } from "./sonner";
+import { TooltipProvider } from "./tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { AuthForm } from "@/components/auth/AuthForm";
-import { AppLayout } from "@/components/layout/AppLayout";
-import Index from "./pages/Index";
-import History from "./pages/History";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
+import { AuthProvider, useAuth } from "./authcontext";
+import { AuthForm } from "./authform";
+import { AppLayout } from "./applayout";
+import Index from "./Index";
+import History from "./History";
+import Settings from "./Settings";
+import NotFound from "./NotFound";
 import { Loader2 } from "lucide-react";
 
 // create query client for react-query
