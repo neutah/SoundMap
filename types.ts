@@ -240,3 +240,47 @@ export const Constants = {
     },
   },
 } as const
+
+export interface TmPrediction {
+  className: string;
+  probability: number;
+}
+
+// map the supabase enum to a local type for easier use in components
+export type SoundCategory = Database["public"]["Enums"]["sound_category"];
+
+export interface DetectedSound {
+  label: string;
+  category: SoundCategory;
+  confidence: number;
+  timestamp: string;
+}
+
+export function categorizeSound(label: string): SoundCategory {
+  const lowerLabel = label.toLowerCase();
+  
+  // alarming sounds
+  if (
+    lowerLabel.includes('siren') || 
+    lowerLabel.includes('alarm') || 
+    lowerLabel.includes('scream') || 
+    lowerLabel.includes('fire') ||
+    lowerLabel.includes('smoke')
+  ) {
+    return 'alarming';
+  }
+  
+  // safe/common sounds
+  if (
+    lowerLabel.includes('doorbell') || 
+    lowerLabel.includes('knock') || 
+    lowerLabel.includes('speech') || 
+    lowerLabel.includes('voice') ||
+    lowerLabel.includes('laugh')
+  ) {
+    return 'safe';
+  }
+  
+  // default to background noise
+  return 'background';
+}
