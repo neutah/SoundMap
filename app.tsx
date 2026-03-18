@@ -36,7 +36,7 @@ function AppContent() {
 
   // show main app if logged in
   return (
-    <BrowserRouter basename=" /SoundMap">
+    <BrowserRouter basename="/SoundMap">
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Index />} />
