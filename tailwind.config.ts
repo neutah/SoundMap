@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}" "./src/**/*.{ts,tsx}"],
+  content: ["./*.{ts,tsx}", "./index.html"],
   prefix: "",
   theme: {
     container: {
@@ -47,7 +47,7 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        //sound category semantic colors
+        // sound category semantic colors
         alarming: {
           DEFAULT: "hsl(var(--alarming))",
           foreground: "hsl(var(--alarming-foreground))",
@@ -77,45 +77,32 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        //accessible fonts
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Inter", "system-ui", "sans-serif"],
       },
       fontSize: {
-        //font scaling according to user preferences
+        // font scaling according to user preferences
         "scaled-xs": "calc(0.75rem * var(--text-scale))",
         "scaled-sm": "calc(0.875rem * var(--text-scale))",
         "scaled-base": "calc(1rem * var(--text-scale))",
         "scaled-lg": "calc(1.125rem * var(--text-scale))",
         "scaled-xl": "calc(1.25rem * var(--text-scale))",
-        "scaled-2x1": "calc(1.5rem * var(--text-scale))",
-        "scaled-3x1": "calc(1.875rem * var(--text-scale))",
-        "scaled-4x1": "calc(2.25rem * var(--text-scale))",
+        "scaled-2xl": "calc(1.5rem * var(--text-scale))",
+        "scaled-3xl": "calc(1.875rem * var(--text-scale))",
+        "scaled-4xl": "calc(2.25rem * var(--text-scale))",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         "pulse-slow": {
-          "0%, 100%": {
-            opacity: "1",
-          },
-          "50": {
-            opacity: "0.6",
-          },
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.6" },
         },
       },
       animation: {
