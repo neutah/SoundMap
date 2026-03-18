@@ -6,17 +6,17 @@
 // - displays visual alerts for different sound categories
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { useTeachableMachine } from '@/hooks/useTeachableMachine';
-import { useHaptic } from '@/hooks/useHaptic';
-import { useNotifications } from '@/hooks/useNotifications';
-import { useAuth } from '@/contexts/AuthContext';
-import { DetectedSound } from '@/types/sound';
-import { SoundCategoryIcon, SoundCategoryBadge } from '@/components/icons/SoundCategoryIcon';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { useTeachableMachine } from './useTeachableMachine';
+import { useNotifications } from './useNotifications';
+import { useUserSettings } from './useUserSettings';
+import { useAuth } from './AuthContext';
+import { DetectedSound } from './types'; 
+import { SoundCategoryIcon, SoundCategoryBadge } from './SoundCategoryIcon';
+import { Button } from './button';
+import { Card, CardContent, CardHeader, CardTitle } from './card';
+import { Progress } from './progress';
 import { Mic, MicOff, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from './utils';
 
 // component props interface
 interface SoundMonitorProps {
