@@ -81,7 +81,7 @@ export function AuthForm() {
           </div>
           
           {/* app name */}
-          <CardTitle className="text-scaled-3xl font-bold">SoundSense</CardTitle>
+          <CardTitle className="text-scaled-3xl font-bold">SoundMap</CardTitle>
           
           {/* mode-specific description */}
           <CardDescription className="text-scaled-lg text-muted-foreground">
