@@ -1,24 +1,19 @@
 name: Deploy SoundMap
 
 on:
-# runs on pushes targeting the default branch
   push:
     branches: ["main"]
-  #allows running this workflow manually from actions tab
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-  
-# allow only one concurrent deployment
-# skipping runs queued between the run in-progress and latest queued
-# does not cancel in-progress runs to allow these production deployments to complete
+
 concurrency:
   group: "pages"
   cancel-in-progress: false
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,17 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 20
-          cache: npm
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Build app
-        run: npm run build
+        run: bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
