@@ -37,7 +37,7 @@ function AppContent() {
 
   // show main app if logged in
   return (
-    <BrowserRouter basename="/SoundMap">
+    <HashRouter>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Index />} />
@@ -47,7 +47,7 @@ function AppContent() {
         {/* catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
