@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { AlertTriangle, Volume2, Shield, LucideIcon } from 'lucide-react';
-import { SoundCategory } from './types'; 
+import { SoundCategory } from './sound';
 import { cn } from './utils';
 
 // sound category icon props interface
@@ -22,23 +22,28 @@ interface SoundCategoryIconProps {
 // alerttriangle for alarming - universal warning symbol
 // volume2 for background - represents ambient noise
 // shield for safe - represents security/safety
+
 const categoryIcons: Record<SoundCategory, LucideIcon> = {
   alarming: AlertTriangle,
   background: Volume2,
   safe: Shield,
 };
 
+
 // mapping of categories to their semantic color classes
 // these classes use css variables from our design system
 // alarming = red, background/noise = cyan, safe = green
+
 const categoryColors: Record<SoundCategory, string> = {
   alarming: 'text-alarming',
   background: 'text-noise',
   safe: 'text-safe',
 };
 
+
 // sound category icon component
 // renders the appropriate icon with category-specific color
+
 export function SoundCategoryIcon({ 
   category, 
   className,
@@ -61,9 +66,11 @@ export function SoundCategoryIcon({
   );
 }
 
+
 // sound category badge component
 // displays icon + label + optional confidence percentage
 // used for showing detected sounds in a visually distinct way
+
 export function SoundCategoryBadge({
   category,
   label,
