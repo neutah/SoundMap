@@ -4,35 +4,55 @@
 
 @layer base {
   :root {
+    /* base high contrast light theme */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
+
     --card: 0 0% 98%;
     --card-foreground: 0 0% 0%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
+
+    /* primary teal accent for main actions */
     --primary: 174 100% 29%;
     --primary-foreground: 0 0% 100%;
+
     --secondary: 0 0% 90%;
     --secondary-foreground: 0 0% 0%;
+
     --muted: 0 0% 85%;
     --muted-foreground: 0 0% 25%;
+
     --accent: 174 100% 35%;
     --accent-foreground: 0 0% 100%;
+
+    /* alarming sounds - bright red/orange */
     --alarming: 0 90% 50%;
     --alarming-foreground: 0 0% 100%;
+
+    /* safe sounds - bright green */
     --safe: 142 76% 36%;
     --safe-foreground: 0 0% 100%;
+
+    /* background noise - bright cyan */
     --noise: 195 100% 45%;
     --noise-foreground: 0 0% 100%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 0 0% 70%;
     --input: 0 0% 70%;
     --ring: 174 100% 29%;
+
     --radius: 0.75rem;
+
+    /* scalable ui variables */
     --text-scale: 1;
     --button-scale: 1;
     --icon-scale: 1;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 0%;
     --sidebar-primary: 174 100% 29%;
@@ -43,32 +63,50 @@
     --sidebar-ring: 174 100% 29%;
   }
 
+  /* default to dark high contrast theme for accessibility */
   .dark {
+    /* near black background for maximum contrast */
     --background: 0 0% 5%;
     --foreground: 0 0% 100%;
+
     --card: 0 0% 10%;
     --card-foreground: 0 0% 100%;
+
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 100%;
+
+    /* bright teal for visibility */
     --primary: 174 100% 50%;
     --primary-foreground: 0 0% 0%;
+
     --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 100%;
+
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
+
     --accent: 174 100% 45%;
     --accent-foreground: 0 0% 0%;
+
+    /* alarming sounds - bright red */
     --alarming: 0 100% 60%;
     --alarming-foreground: 0 0% 100%;
+
+    /* safe sounds - bright green */
     --safe: 142 90% 50%;
     --safe-foreground: 0 0% 0%;
+
+    /* background noise - bright cyan */
     --noise: 195 100% 60%;
     --noise-foreground: 0 0% 0%;
+
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 0 0% 30%;
     --input: 0 0% 25%;
     --ring: 174 100% 50%;
+
     --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 174 100% 50%;
@@ -79,6 +117,7 @@
     --sidebar-ring: 174 100% 50%;
   }
 
+  /* high contrast light variant */
   .light-contrast {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
@@ -94,48 +133,90 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    /* apply text scaling */
     font-size: calc(1rem * var(--text-scale));
   }
+
+  /* ensure high contrast focus states */
   *:focus-visible {
     @apply outline-none ring-4 ring-ring ring-offset-2 ring-offset-background;
   }
 }
 
 @layer utilities {
+  /* scalable button sizes */
   .btn-scaled {
     transform: scale(var(--button-scale));
     transform-origin: center;
   }
+
+  /* scalable icon sizes */
   .icon-scaled {
     transform: scale(var(--icon-scale));
     transform-origin: center;
   }
-  .bg-alarming { background-color: hsl(var(--alarming)); }
-  .text-alarming { color: hsl(var(--alarming)); }
-  .border-alarming { border-color: hsl(var(--alarming)); }
 
-  .bg-safe { background-color: hsl(var(--safe)); }
-  .text-safe { color: hsl(var(--safe)); }
-  .border-safe { border-color: hsl(var(--safe)); }
+  /* sound category colors */
+  .bg-alarming {
+    background-color: hsl(var(--alarming));
+  }
+  .text-alarming {
+    color: hsl(var(--alarming));
+  }
+  .border-alarming {
+    border-color: hsl(var(--alarming));
+  }
 
-  .bg-noise { background-color: hsl(var(--noise)); }
-  .text-noise { color: hsl(var(--noise)); }
-  .border-noise { border-color: hsl(var(--noise)); }
+  .bg-safe {
+    background-color: hsl(var(--safe));
+  }
+  .text-safe {
+    color: hsl(var(--safe));
+  }
+  .border-safe {
+    border-color: hsl(var(--safe));
+  }
 
+  .bg-noise {
+    background-color: hsl(var(--noise));
+  }
+  .text-noise {
+    color: hsl(var(--noise));
+  }
+  .border-noise {
+    border-color: hsl(var(--noise));
+  }
+
+  /* pulse animation for active listening */
   .pulse-ring {
     animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
   @keyframes pulse-ring {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.05); }
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
   }
+
+  /* notification flash animation */
   .flash-alert {
     animation: flash-alert 0.5s ease-in-out 3;
   }
+
   @keyframes flash-alert {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
   }
 }
