@@ -1,13 +1,12 @@
 // main app component with routing and auth
-import React from "react";
 import { Toaster } from "./toaster";
 import { Toaster as Sonner } from "./sonner";
 import { TooltipProvider } from "./tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuth } from "./authcontext";
-import { AuthForm } from "./authform";
-import { AppLayout } from "./applayout";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./AuthContext";
+import { AuthForm } from "./AuthForm";
+import { AppLayout } from "./AppLayout";
 import Index from "./Index";
 import History from "./History";
 import Settings from "./Settings";
