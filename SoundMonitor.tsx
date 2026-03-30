@@ -7,11 +7,11 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTeachableMachine } from './useTeachableMachine';
+import { useHaptic } from './useHaptic';
 import { useNotifications } from './useNotifications';
-import { useUserSettings } from './useUserSettings';
-import { useAuth } from './authcontext';
-import { DetectedSound } from './types'; 
-import { SoundCategoryIcon, SoundCategoryBadge } from './soundcategoryicons';
+import { useAuth } from './AuthContext';
+import { DetectedSound } from './sound';
+import { SoundCategoryIcon, SoundCategoryBadge } from './SoundCategoryIcon';
 import { Button } from './button';
 import { Card, CardContent, CardHeader, CardTitle } from './card';
 import { Progress } from './progress';
@@ -26,7 +26,6 @@ interface SoundMonitorProps {
 
 // sound monitor component
 export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
-  // hooks 
   
   // get current user for saving notifications
   const { user } = useAuth();
@@ -39,8 +38,6 @@ export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
   
   // local state for visual alert animation
   const [showAlert, setShowAlert] = useState(false);
-
-  // sound detection callback 
   
   // called when the ml model detects a sound with high confidence
   // handles haptic feedback, visual alerts, and saving to database
@@ -63,7 +60,6 @@ export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
     }
   }, [hapticEnabled, vibrate, addNotification, user]);
 
-  // teachable machine hook 
   
   // initialize the ml model and get control functions
   const {
@@ -76,8 +72,6 @@ export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
     stopListening,   // function to stop microphone
     labels,          // list of sounds the model can detect
   } = useTeachableMachine(handleSoundDetected, 0.7);
-
-  // notification permission effect 
   
   // request browser notification permission on component mount
   // this allows showing system notifications when sounds are detected
@@ -89,14 +83,10 @@ export function SoundMonitor({ hapticEnabled = true }: SoundMonitorProps) {
       });
     }
   }, []);
-
-  // derived state 
   
   // get top 3 predictions for display in the ui
   // sorted by probability (highest first)
   const topPredictions = predictions.slice(0, 3);
-
-  // render 
   
   return (
     <div className="space-y-6">
