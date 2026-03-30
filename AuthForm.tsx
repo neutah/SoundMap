@@ -4,7 +4,7 @@
 // toggles between login and signup modes
 
 import React, { useState } from 'react';
-import { useAuth } from './authcontext';
+import { useAuth } from './AuthContext';
 import { Button } from './button';
 import { Input } from './input';
 import { Label } from './label';
@@ -14,7 +14,6 @@ import { Loader2, Ear, Mail, Lock } from 'lucide-react';
 // auth form component
 // no props - uses auth context for all authentication logic
 export function AuthForm() {
-  // form state 
   
   // toggle between login mode (true) and signup mode (false)
   const [isLogin, setIsLogin] = useState(true);
@@ -33,8 +32,6 @@ export function AuthForm() {
   
   // get auth functions from context
   const { signIn, signUp } = useAuth();
-
-  // form submission handler 
   
   // handles both login and signup based on current mode
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,8 +63,6 @@ export function AuthForm() {
       setIsSubmitting(false);
     }
   };
-
-  // render 
   
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background">
@@ -81,7 +76,7 @@ export function AuthForm() {
           </div>
           
           {/* app name */}
-          <CardTitle className="text-scaled-3xl font-bold">SoundMap</CardTitle>
+          <CardTitle className="text-scaled-3xl font-bold">SoundSense</CardTitle>
           
           {/* mode-specific description */}
           <CardDescription className="text-scaled-lg text-muted-foreground">
