@@ -1,6 +1,6 @@
 // settings page for accessibility preferences
 import React from 'react';
-import { useAuth } from './authcontext'; 
+import { useAuth } from './AuthContext';
 import { useUserSettings } from './useUserSettings';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './card';
 import { Label } from './label';
