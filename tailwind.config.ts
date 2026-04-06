@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./*.{ts,tsx}", "./index.html"],
+  content: ["./*.{ts,tsx}", "./src/integrations/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -47,7 +47,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // sound category semantic colors
         alarming: {
           DEFAULT: "hsl(var(--alarming))",
           foreground: "hsl(var(--alarming-foreground))",
@@ -81,7 +80,6 @@ export default {
         display: ["Inter", "system-ui", "sans-serif"],
       },
       fontSize: {
-        // font scaling according to user preferences
         "scaled-xs": "calc(0.75rem * var(--text-scale))",
         "scaled-sm": "calc(0.875rem * var(--text-scale))",
         "scaled-base": "calc(1rem * var(--text-scale))",
@@ -93,16 +91,28 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
         "pulse-slow": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.6",
+          },
         },
       },
       animation: {
