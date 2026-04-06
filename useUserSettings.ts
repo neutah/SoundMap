@@ -43,7 +43,7 @@ export function useUserSettings(userId: string | null): UseUserSettingsReturn {
   
   // error message if something went wrong
   const [error, setError] = useState<string | null>(null);
-\
+
   // loads user settings from database when user logs in
   // creates default settings if none exist (shouldn't happen with trigger)
   useEffect(() => {
