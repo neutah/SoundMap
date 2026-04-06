@@ -6,7 +6,7 @@
 // - returns predictions sorted by confidence for ui display
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { TmPrediction, categorizeSound, DetectedSound } from './src/intergrations/supabase/types';
+import { TmPrediction, categorizeSound, DetectedSound } from './src/integrations/supabase/types';
 
 // teachable machine model url provided by user
 // this model was trained on teachablemachine.withgoogle.com
