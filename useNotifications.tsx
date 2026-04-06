@@ -4,7 +4,7 @@
 // provides real-time local state updates for immediate ui feedback
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from './client'; 
+import { supabase } from './src/integrations/supabase/client';
 import { NotificationRecord, DetectedSound } from './types';
 
 // hook return type interface
