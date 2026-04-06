@@ -4,8 +4,8 @@
 // persists to database so settings follow user across devices
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from './client'; 
-import { UserSettings } from './types';
+import { supabase } from './src/integrations/supabase/client';
+import { UserSettings } from './sound';
 
 // default settings for new users
 // these values are used when a user first signs up
@@ -14,7 +14,7 @@ const defaultSettings: Omit<UserSettings, 'id' | 'user_id'> = {
   text_size: 1.0,      // 100% text size (no scaling)
   button_size: 1.0,    // 100% button size
   icon_size: 1.0,      // 100% icon size
-  theme: 'dark',       // dark high contrast theme
+  theme: 'dark',       // dark high contrast theme (best for accessibility)
   haptic_enabled: true, // vibration alerts on by default
 };
 
@@ -35,8 +35,6 @@ interface UseUserSettingsReturn {
 // main hook function for managing user settings
 // parameter: userId - the current user's id, or null if not logged in
 export function useUserSettings(userId: string | null): UseUserSettingsReturn {
-  // state 
-  
   // the current settings object from database
   const [settings, setSettings] = useState<UserSettings | null>(null);
   
@@ -45,9 +43,7 @@ export function useUserSettings(userId: string | null): UseUserSettingsReturn {
   
   // error message if something went wrong
   const [error, setError] = useState<string | null>(null);
-
-  // fetch settings effect 
-  
+\
   // loads user settings from database when user logs in
   // creates default settings if none exist (shouldn't happen with trigger)
   useEffect(() => {
@@ -101,7 +97,7 @@ export function useUserSettings(userId: string | null): UseUserSettingsReturn {
     fetchSettings();
   }, [userId]);
 
-  // apply settings function 
+  // ========== apply settings function ==========
   
   // updates css custom properties based on current settings
   // these variables control text, button, and icon scaling throughout the app
@@ -130,17 +126,17 @@ export function useUserSettings(userId: string | null): UseUserSettingsReturn {
     });
   }, [settings]);
 
-  // apply settings effect 
+  // ========== apply settings effect ==========
   
   // automatically apply css variables whenever settings change
   useEffect(() => {
     applySettings();
   }, [applySettings]);
 
-  // update settings function 
+  // ========== update settings function ==========
   
   // saves updated settings to database and updates local state
-  // accepts partial updates
+  // accepts partial updates (e.g., just { text_size: 1.2 })
   const updateSettings = useCallback(async (updates: Partial<Omit<UserSettings, 'id' | 'user_id'>>) => {
     // need both user id and existing settings to update
     if (!userId || !settings) return;
