@@ -5,7 +5,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from './src/integrations/supabase/client.ts';
+import { supabase } from './src/integrations/supabase/client';
 
 // context type definition
 // defines the shape of the authentication context value
