@@ -239,7 +239,7 @@ export const Constants = {
       sound_category: ["alarming", "background", "safe"],
     },
   },
-  // sound category types for classification results
+} as const
 
 export type SoundCategory = 'alarming' | 'background' | 'safe';
 
@@ -312,4 +312,3 @@ export function categorizeSound(label: string): SoundCategory {
   const normalizedLabel = label.toLowerCase().trim();
   return soundCategoryMap[normalizedLabel] || 'background';
 }
-} as const
