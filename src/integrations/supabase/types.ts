@@ -240,3 +240,48 @@ export const Constants = {
     },
   },
 } as const
+// sound category types for classification results
+
+export type SoundCategory = 'alarming' | 'background' | 'safe';
+
+export interface DetectedSound {
+  label: string;
+  category: SoundCategory;
+  confidence: number;
+  timestamp: Date;
+}
+
+export interface NotificationRecord {
+  id: string;
+  user_id: string;
+  sound_label: string;
+  category: SoundCategory;
+  confidence: number;
+  detected_at: string;
+}
+
+export interface UserSettings {
+  id: string;
+  user_id: string;
+  text_size: number;
+  button_size: number;
+  icon_size: number;
+  theme: 'dark' | 'light' | 'light-contrast';
+  haptic_enabled: boolean;
+}
+
+export interface TmPrediction {
+  className: string;
+  probability: number;
+}
+
+export const soundCategoryMap: Record<string, SoundCategory> = {
+  'fire alarm': 'alarming',
+  'smoke alarm': 'alarming',
+  'siren': 'alarming',
+  'car horn': 'alarming',
+  'glass breaking': 'alarming',
+  'scream': 'alarming',
+  'dog bark': 'alarming',
+  'baby cry': 'alarming',
+  'door kno
