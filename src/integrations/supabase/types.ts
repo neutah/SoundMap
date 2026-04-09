@@ -239,8 +239,7 @@ export const Constants = {
       sound_category: ["alarming", "background", "safe"],
     },
   },
-} as const
-// sound category types for classification results
+  // sound category types for classification results
 
 export type SoundCategory = 'alarming' | 'background' | 'safe';
 
@@ -284,4 +283,33 @@ export const soundCategoryMap: Record<string, SoundCategory> = {
   'scream': 'alarming',
   'dog bark': 'alarming',
   'baby cry': 'alarming',
-  'door kno
+  'door knock': 'alarming',
+  'doorbell': 'alarming',
+  'alarm': 'alarming',
+  'horn': 'alarming',
+  'emergency': 'alarming',
+  'background noise': 'background',
+  'traffic': 'background',
+  'wind': 'background',
+  'rain': 'background',
+  'crowd': 'background',
+  'typing': 'background',
+  'hvac': 'background',
+  'noise': 'background',
+  'ambient': 'background',
+  '_background noise_': 'background',
+  'silence': 'safe',
+  'speech': 'safe',
+  'music': 'safe',
+  'birds': 'safe',
+  'water': 'safe',
+  'talking': 'safe',
+  'voice': 'safe',
+  '_silence_': 'safe',
+};
+
+export function categorizeSound(label: string): SoundCategory {
+  const normalizedLabel = label.toLowerCase().trim();
+  return soundCategoryMap[normalizedLabel] || 'background';
+}
+} as const
