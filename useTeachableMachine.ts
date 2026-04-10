@@ -11,7 +11,7 @@ import { TmPrediction, categorizeSound, DetectedSound } from './src/integrations
 // teachable machine model url provided by user
 // this model was trained on teachablemachine.withgoogle.com
 // it classifies audio into different sound categories
-const MODEL_URL = 'https://teachablemachine.withgoogle.com/models/Kl09OwSI-/';
+const MODEL_URL = 'https://teachablemachine.withgoogle.com/models/ZofTW9DIj/';
 
 // speech command recognizer interface from tensorflow speech-commands library
 // this is the core class that handles audio capture and ml inference
